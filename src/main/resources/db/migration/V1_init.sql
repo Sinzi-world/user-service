@@ -1,44 +1,52 @@
 CREATE TABLE users
 (
-    id           INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    username     VARCHAR(50)  NOT NULL UNIQUE,
-    password     VARCHAR(255) NOT NULL,
-    about_me     varchar(4096),
-    email        VARCHAR(100) NOT NULL UNIQUE,
-    phone_number VARCHAR(20),
-    country      VARCHAR(50),
-    city         VARCHAR(50),
-    street       VARCHAR(100),
-    postal_code  VARCHAR(20),
-    created_at   TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    id         INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY UNIQUE,
+    username   VARCHAR(64) UNIQUE       NOT NULL,
+    password   VARCHAR(128)             NOT NULL,
+    email      VARCHAR(64) UNIQUE       NOT NULL,
+    phone      VARCHAR(32) UNIQUE,
+    about_me   VARCHAR(4096),
+    active     BOOLEAN     DEFAULT true NOT NULL,
+    city       VARCHAR(64),
+    country    VARCHAR(64)                      NOT NULL,
+    experience INT,
+    created_at TIMESTAMPTZ DEFAULT current_timestamp,
+    updated_at TIMESTAMPTZ DEFAULT current_timestamp
+);
+
+CREATE TABLE subscription
+(
+    id          INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY UNIQUE,
+    follower_id INT NOT NULL,
+    followee_id INT NOT NULL,
+    created_at  TIMESTAMPTZ DEFAULT current_timestamp,
+    updated_at  TIMESTAMPTZ DEFAULT current_timestamp,
+
+    CONSTRAINT fk_follower_id FOREIGN KEY (follower_id) REFERENCES users (id),
+    CONSTRAINT fk_followee_id FOREIGN KEY (followee_id) REFERENCES users (id)
 );
 
 CREATE TABLE posts
 (
-    id         INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    title      VARCHAR(255) NOT NULL,
+    id         INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY UNIQUE,
+    title      VARCHAR(256) NOT NULL,
     content    TEXT         NOT NULL,
     author_id  INT          NOT NULL,
-    category   VARCHAR(50),
+    category   VARCHAR(32),
     tags       TEXT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT fk_post_author FOREIGN KEY (author_id)
-        REFERENCES users (id)
-        ON DELETE CASCADE
+    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_post_author FOREIGN KEY (author_id) REFERENCES users (id)
 );
 
 CREATE TABLE comments
 (
-    id         INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id         INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY UNIQUE,
     post_id    INT  NOT NULL,
     user_id    INT  NOT NULL,
     content    TEXT NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT fk_comment_post FOREIGN KEY (post_id)
-        REFERENCES posts (id)
-        ON DELETE CASCADE,
-    CONSTRAINT fk_comment_user FOREIGN KEY (user_id)
-        REFERENCES users (id)
-        ON DELETE CASCADE
+    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_comment_post FOREIGN KEY (post_id) REFERENCES posts (id),
+    CONSTRAINT fk_comment_user FOREIGN KEY (user_id) REFERENCES users (id)
 );
