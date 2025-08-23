@@ -8,7 +8,7 @@ CREATE TABLE users
     about_me   VARCHAR(4096),
     active     BOOLEAN     DEFAULT true NOT NULL,
     city       VARCHAR(64),
-    country    VARCHAR(64)                      NOT NULL,
+    country    VARCHAR(64)              NOT NULL,
     experience INT,
     created_at TIMESTAMPTZ DEFAULT current_timestamp,
     updated_at TIMESTAMPTZ DEFAULT current_timestamp
