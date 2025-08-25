@@ -1,4 +1,4 @@
-package com.blog.user_service.dto;
+package com.blog.user_service.dto.user;
 
 import lombok.Data;
 import lombok.AllArgsConstructor;
@@ -28,4 +28,8 @@ public class UserDto {
     private Integer followersCount;
 
     private Integer followeesCount;
+
+    private String createdAt;
+
+    private String updatedAt;
 }

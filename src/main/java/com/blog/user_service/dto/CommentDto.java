@@ -1,5 +1,6 @@
 package com.blog.user_service.dto;
 
+import com.blog.user_service.dto.user.UserDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,9 +14,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class CommentDto {
 
-    private Long id;
+    private long id;
 
-    private Long postId;
+    private long postId;
 
     private UserDto user;
 

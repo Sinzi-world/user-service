@@ -1,5 +1,6 @@
 package com.blog.user_service.dto;
 
+import com.blog.user_service.dto.user.UserDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,7 +13,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class PostDto {
 
-    private Long id;
+    private long id;
 
     private String title;
 
