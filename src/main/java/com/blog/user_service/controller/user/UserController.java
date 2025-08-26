@@ -1,10 +1,9 @@
-package com.blog.user_service.controller;
+package com.blog.user_service.controller.user;
 
-import com.blog.user_service.dto.*;
 import com.blog.user_service.dto.user.CreateUserDto;
 import com.blog.user_service.dto.user.UpdateUserDto;
 import com.blog.user_service.dto.user.UserDto;
-import com.blog.user_service.service.UserService;
+import com.blog.user_service.service.impl.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final UserService userService;
+    private final UserServiceImpl userService;
 
     @PostMapping
     public UserDto createUser(@RequestBody @Valid CreateUserDto dto) {

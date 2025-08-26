@@ -3,7 +3,7 @@ package com.blog.user_service.mapper;
 import com.blog.user_service.dto.user.CreateUserDto;
 import com.blog.user_service.dto.user.UpdateUserDto;
 import com.blog.user_service.dto.user.UserDto;
-import com.blog.user_service.entity.User;
+import com.blog.user_service.entity.user.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;

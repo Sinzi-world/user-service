@@ -1,11 +1,12 @@
-package com.blog.user_service.service;
+package com.blog.user_service.service.impl;
 
 import com.blog.user_service.dto.user.UpdateUserDto;
 import com.blog.user_service.mapper.UserMapper;
 import com.blog.user_service.dto.user.CreateUserDto;
 import com.blog.user_service.dto.user.UserDto;
-import com.blog.user_service.entity.User;
-import com.blog.user_service.repository.UserRepository;
+import com.blog.user_service.entity.user.User;
+import com.blog.user_service.repository.user.UserRepository;
+import com.blog.user_service.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service("userService")
 @RequiredArgsConstructor
-public class UserService {
+public class UserServiceImpl implements UserService {
 
     private final UserMapper userMapper;
     private final UserRepository userRepository;
