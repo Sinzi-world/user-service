@@ -34,9 +34,19 @@ public class UserController {
         return userService.getUserById(id);
     }
 
+    @GetMapping("/username/{username}")
+    public UserDto getUserByUsername(@PathVariable String username) {
+        return userService.getUserByUsername(username);
+    }
+
     @GetMapping
     public List<UserDto> getAllUsers() {
         return userService.getAllUsers();
+    }
+
+    @GetMapping("/count")
+    public Long countAllUsers() {
+        return userService.countAllUsers();
     }
 
     @DeleteMapping("/{id}")

@@ -61,6 +61,10 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
+    public Long countAllUsers() {
+        return userRepository.count();
+    }
+
     public void deleteUserById(Long userId) {
         if(userRepository.findById(userId).isPresent()) {
             userRepository.deleteById(userId);
