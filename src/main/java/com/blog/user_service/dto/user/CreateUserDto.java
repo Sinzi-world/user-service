@@ -32,5 +32,9 @@ public class CreateUserDto {
 
     private String city;
 
+    private String country;
+
     private Integer experience;
+
+    private String aboutMe;
 }

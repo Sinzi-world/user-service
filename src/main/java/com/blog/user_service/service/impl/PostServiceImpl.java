@@ -79,8 +79,8 @@ public class PostServiceImpl implements PostService {
                 .collect(Collectors.toList());
     }
 
-    @Override
-    public void deletePostById(Long postId) {
-        postRepository.deleteById(postId);
-    }
+//    @Override
+//    public void deletePostById(Long postId) {
+//        postRepository.deleteById(postId);
+//    }
 }

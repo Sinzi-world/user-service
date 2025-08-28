@@ -1,5 +1,6 @@
 package com.blog.user_service.entity.user;
 
+import com.blog.user_service.entity.post.Post;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -53,6 +54,9 @@ public class User {
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+    @OneToMany(mappedBy = "author")
+    private List<Post> posts;
 
     // Пользователи, на которых я подписан
     @ManyToMany

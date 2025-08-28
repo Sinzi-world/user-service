@@ -22,8 +22,8 @@ CREATE TABLE subscription
     created_at  TIMESTAMPTZ DEFAULT current_timestamp,
     updated_at  TIMESTAMPTZ DEFAULT current_timestamp,
 
-    CONSTRAINT fk_follower_id FOREIGN KEY (follower_id) REFERENCES users (id),
-    CONSTRAINT fk_followee_id FOREIGN KEY (followee_id) REFERENCES users (id)
+    CONSTRAINT fk_follower_id FOREIGN KEY (follower_id) REFERENCES users (id) ON DELETE CASCADE,
+    CONSTRAINT fk_followee_id FOREIGN KEY (followee_id) REFERENCES users (id) ON DELETE CASCADE
 );
 
 CREATE TABLE posts
@@ -36,17 +36,17 @@ CREATE TABLE posts
     tags       TEXT,
     created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT fk_post_author FOREIGN KEY (author_id) REFERENCES users (id)
+    CONSTRAINT fk_post_author FOREIGN KEY (author_id) REFERENCES users (id) ON DELETE SET NULL
 );
 
 CREATE TABLE comments
 (
     id         INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY UNIQUE,
     post_id    INT  NOT NULL,
-    user_id    INT  NOT NULL,
+    user_id    INT,
     content    TEXT NOT NULL,
     created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT fk_comment_post FOREIGN KEY (post_id) REFERENCES posts (id),
-    CONSTRAINT fk_comment_user FOREIGN KEY (user_id) REFERENCES users (id)
+    CONSTRAINT fk_comment_post FOREIGN KEY (post_id) REFERENCES posts (id) ON DELETE CASCADE,
+    CONSTRAINT fk_comment_user FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE SET NULL
 );

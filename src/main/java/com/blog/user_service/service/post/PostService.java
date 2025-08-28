@@ -16,7 +16,7 @@ public interface PostService {
 
     List<PostDto> getPostsByAuthorId(Long authorId);
 
-    void deletePostById(Long postId);
+//    void deletePostById(Long postId);
 
 
 }

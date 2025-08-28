@@ -7,6 +7,7 @@ import com.blog.user_service.dto.user.UserDto;
 import com.blog.user_service.entity.user.User;
 import com.blog.user_service.repository.user.UserRepository;
 import com.blog.user_service.service.user.UserService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -72,14 +73,17 @@ public class UserServiceImpl implements UserService {
         return userRepository.count();
     }
 
-    @Override
-    public void deleteUserById(Long userId) {
-        if (userRepository.findById(userId).isPresent()) {
-            userRepository.deleteById(userId);
-        } else {
-            log.debug("User not found");
-            throw new IllegalArgumentException("Пользователь с ID: " + userId + " не найден");
-        }
-    }
+//    @Transactional
+//    public void deleteUserById(Long userId) {
+//        User user = userRepository.findById(userId)
+//                .orElseThrow(() -> new IllegalArgumentException("No user with id " + userId));
+//
+//        user.getFollowees().clear();
+//        user.getFollowers().clear();
+//
+//        user.getPosts().forEach(post -> post.setAuthor(null));
+//
+//        userRepository.delete(user);
+//    }
 
 }

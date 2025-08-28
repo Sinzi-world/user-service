@@ -23,6 +23,8 @@ public class UserDto {
 
     private String country;
 
+    private String city;
+
     private Integer experience;
 
     private Integer followersCount;

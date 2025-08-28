@@ -39,9 +39,9 @@ public class PostController {
         return postService.getPostsByAuthorId(authorId);
     }
 
-    @DeleteMapping("/{postId}")
-    public void deletePostById(@PathVariable Long postId){
-        postService.deletePostById(postId);
-    }
+//    @DeleteMapping("/{postId}")
+//    public void deletePostById(@PathVariable Long postId){
+//        postService.deletePostById(postId);
+//    }
 
 }

@@ -26,4 +26,6 @@ public class UpdateUserDto {
     private String city;
 
     private Integer experience;
+
+    private String aboutMe;
 }
