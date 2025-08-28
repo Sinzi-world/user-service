@@ -1,6 +1,5 @@
 package com.blog.user_service.dto.post;
 
-import com.blog.user_service.dto.user.UserDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,7 +17,7 @@ public class PostDto {
 
     private String content;
 
-    private UserDto author;
+    private AuthorInfo author;
 
     private String category;
 

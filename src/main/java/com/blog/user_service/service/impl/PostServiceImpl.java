@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,12 +43,14 @@ public class PostServiceImpl implements PostService {
     @Override
     public PostDto updatePost(Long postId, PostDto postDto) {
         Post post = postRepository.findById(postId)
-                .orElseThrow(() -> {
-                    log.debug("No post found with id {}", postId);
-                    return new IllegalArgumentException("No post found with id " + postId);
-                });
+                .orElseThrow(() -> new IllegalArgumentException("No post found with id " + postId));
+
         postMapper.updatePost(postDto, post);
-        return postMapper.toDto(post);
+
+        post.setUpdatedAt(LocalDateTime.now());
+
+        Post saved = postRepository.save(post);
+        return postMapper.toDto(saved);
     }
 
     @Override
