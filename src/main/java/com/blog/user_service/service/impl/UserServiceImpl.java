@@ -21,12 +21,14 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final UserRepository userRepository;
 
+    @Override
     public UserDto createUser(CreateUserDto createUserDto) {
         User user = userMapper.toUserEntity(createUserDto);
         userRepository.save(user);
         return userMapper.toUserDto(user);
     }
 
+    @Override
     public UserDto updateUser(Long userId, UpdateUserDto updateUserDto) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> {
@@ -37,15 +39,17 @@ public class UserServiceImpl implements UserService {
         return userMapper.toUserDto(user);
     }
 
+    @Override
     public UserDto getUserById(Long userId) {
         return userRepository.findById(userId)
                 .map(userMapper::toUserDto)
                 .orElseThrow(() -> {
                     log.debug("User not found");
                     return new IllegalArgumentException("Пользователь с ID: " + userId + " не найден");
-                        });
+                });
     }
 
+    @Override
     public UserDto getUserByUsername(String username) {
         return userRepository.findByUsername(username)
                 .map(userMapper::toUserDto)
@@ -55,6 +59,7 @@ public class UserServiceImpl implements UserService {
                 });
     }
 
+    @Override
     public List<UserDto> getAllUsers() {
         return userRepository.findAll()
                 .stream()
@@ -62,14 +67,16 @@ public class UserServiceImpl implements UserService {
                 .collect(Collectors.toList());
     }
 
+    @Override
     public Long countAllUsers() {
         return userRepository.count();
     }
 
+    @Override
     public void deleteUserById(Long userId) {
-        if(userRepository.findById(userId).isPresent()) {
+        if (userRepository.findById(userId).isPresent()) {
             userRepository.deleteById(userId);
-        } else  {
+        } else {
             log.debug("User not found");
             throw new IllegalArgumentException("Пользователь с ID: " + userId + " не найден");
         }
