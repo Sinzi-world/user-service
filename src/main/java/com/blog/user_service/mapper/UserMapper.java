@@ -15,11 +15,11 @@ public interface UserMapper {
     @Mapping(target = "id",  ignore = true)
     User toUserEntity(CreateUserDto createUserDto);
 
-    void update(UpdateUserDto updateUserDto,@MappingTarget User user);
-
     @Mapping(source = "createdAt", target = "createdAt", dateFormat = "yyyy-MM-dd HH:mm:ss")
     @Mapping(source = "updatedAt", target = "updatedAt", dateFormat = "yyyy-MM-dd HH:mm:ss")
     UserDto toUserDto(User user);
 
+
+    void update(UpdateUserDto updateUserDto,@MappingTarget User user);
 
 }

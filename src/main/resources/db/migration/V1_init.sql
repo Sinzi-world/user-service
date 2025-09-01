@@ -36,7 +36,7 @@ CREATE TABLE posts
     tags       TEXT,
     created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT fk_post_author FOREIGN KEY (author_id) REFERENCES users (id) ON DELETE SET NULL
+    CONSTRAINT fk_post_author FOREIGN KEY (author_id) REFERENCES users (id) ON DELETE SET CASCADE
 );
 
 CREATE TABLE comments
@@ -48,5 +48,5 @@ CREATE TABLE comments
     created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_comment_post FOREIGN KEY (post_id) REFERENCES posts (id) ON DELETE CASCADE,
-    CONSTRAINT fk_comment_user FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE SET NULL
+    CONSTRAINT fk_comment_user FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );

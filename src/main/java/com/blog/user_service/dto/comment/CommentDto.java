@@ -1,6 +1,6 @@
 package com.blog.user_service.dto.comment;
 
-import com.blog.user_service.dto.user.UserDto;
+import com.blog.user_service.dto.post.AuthorInfo;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,7 +18,7 @@ public class CommentDto {
 
     private long postId;
 
-    private UserDto user;
+    private AuthorInfo user;
 
     private String content;
 
