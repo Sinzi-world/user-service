@@ -25,7 +25,7 @@ public class CreateUserDto {
     @NotBlank
     @Email
     @Size(max = 64)
-    @Schema(description = "электронный почтовый ящик", example = "example@example.com", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "Электронный почтовый ящик", example = "example@example.com", requiredMode = Schema.RequiredMode.REQUIRED)
     private String email;
 
     @Size(max = 32)
