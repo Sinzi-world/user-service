@@ -1,7 +1,7 @@
 package com.blog.user_service.mapper;
 
-import com.blog.user_service.dto.post.AuthorInfo;
-import com.blog.user_service.dto.post.PostDto;
+import com.blog.user_service.dto.blog.AuthorInfo;
+import com.blog.user_service.dto.blog.post.PostDto;
 import com.blog.user_service.entity.post.Post;
 import com.blog.user_service.entity.user.User;
 import org.mapstruct.*;

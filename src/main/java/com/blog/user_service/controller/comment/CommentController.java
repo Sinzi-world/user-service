@@ -1,7 +1,7 @@
 package com.blog.user_service.controller.comment;
 
 
-import com.blog.user_service.dto.comment.CommentDto;
+import com.blog.user_service.dto.blog.comment.CommentDto;
 import com.blog.user_service.service.impl.CommentServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

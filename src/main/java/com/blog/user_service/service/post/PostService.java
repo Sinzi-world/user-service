@@ -1,6 +1,6 @@
 package com.blog.user_service.service.post;
 
-import com.blog.user_service.dto.post.PostDto;
+import com.blog.user_service.dto.blog.post.PostDto;
 
 import java.util.List;
 

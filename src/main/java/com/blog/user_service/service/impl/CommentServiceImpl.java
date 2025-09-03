@@ -1,6 +1,6 @@
 package com.blog.user_service.service.impl;
 
-import com.blog.user_service.dto.comment.CommentDto;
+import com.blog.user_service.dto.blog.comment.CommentDto;
 import com.blog.user_service.entity.comment.Comment;
 import com.blog.user_service.entity.post.Post;
 import com.blog.user_service.entity.user.User;
