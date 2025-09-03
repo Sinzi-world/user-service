@@ -1,7 +1,7 @@
 package com.blog.user_service.controller.post;
 
 import com.blog.user_service.dto.post.PostDto;
-import com.blog.user_service.service.post.PostService;
+import com.blog.user_service.service.impl.PostServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,7 +12,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PostController {
 
-    private final PostService postService;
+    private final PostServiceImpl postService;
 
     @PostMapping("/author/{authorId}")
     public PostDto createPost(@PathVariable Long authorId, @RequestBody PostDto postDto){

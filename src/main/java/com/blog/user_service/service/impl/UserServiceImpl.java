@@ -7,7 +7,6 @@ import com.blog.user_service.dto.user.UserDto;
 import com.blog.user_service.entity.user.User;
 import com.blog.user_service.repository.user.UserRepository;
 import com.blog.user_service.service.user.UserService;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

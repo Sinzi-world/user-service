@@ -2,7 +2,7 @@ package com.blog.user_service.controller.comment;
 
 
 import com.blog.user_service.dto.comment.CommentDto;
-import com.blog.user_service.service.comment.CommentService;
+import com.blog.user_service.service.impl.CommentServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +13,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CommentController {
 
-    private final CommentService commentService;
+    private final CommentServiceImpl commentService;
 
     @PostMapping
     public CommentDto createComment(@RequestParam Long userId,

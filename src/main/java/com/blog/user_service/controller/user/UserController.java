@@ -4,6 +4,13 @@ import com.blog.user_service.dto.user.CreateUserDto;
 import com.blog.user_service.dto.user.UpdateUserDto;
 import com.blog.user_service.dto.user.UserDto;
 import com.blog.user_service.service.impl.UserServiceImpl;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,36 +20,78 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
+@Tag(name = "UserController", description = "API для работы с пользователями")
 public class UserController {
 
     private final UserServiceImpl userService;
 
+    @Operation(
+            summary = "Создать пользователя",
+            description = "Создаёт нового пользователя в системе"
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Пользователь успешно создан",
+                    content = @Content(schema = @Schema(implementation = UserDto.class))),
+            @ApiResponse(responseCode = "400", description = "Некорректные данные запроса"),
+            @ApiResponse(responseCode = "409", description = "Пользователь с таким email или username уже существует")
+    })
     @PostMapping
     public UserDto createUser(@RequestBody @Valid CreateUserDto dto) {
         return userService.createUser(dto);
     }
 
+    @Operation(
+            summary = "Обновить пользователя",
+            description = "Обновляет данные пользователя по ID"
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Пользователь успешно обновлён",
+                    content = @Content(schema = @Schema(implementation = UserDto.class))),
+            @ApiResponse(responseCode = "404", description = "Пользователь не найден")
+    })
     @PutMapping("/{id}")
-    public UserDto updateUser(@PathVariable Long id,
-                              @RequestBody @Valid UpdateUserDto dto) {
+    public UserDto updateUser(
+            @Parameter(description = "ID пользователя", required = true)
+            @PathVariable Long id,
+            @RequestBody @Valid UpdateUserDto dto) {
         return userService.updateUser(id, dto);
     }
 
+    @Operation(
+            summary = "Получить пользователя по ID",
+            description = "Возвращает информацию о пользователе по его идентификатору"
+    )
     @GetMapping("/{id}")
-    public UserDto getUser(@PathVariable Long id) {
+    public UserDto getUser(
+            @Parameter(description = "ID пользователя", required = true)
+            @PathVariable Long id) {
         return userService.getUserById(id);
     }
 
+    @Operation(
+            summary = "Получить пользователя по username",
+            description = "Возвращает информацию о пользователе по его имени"
+    )
     @GetMapping("/username/{username}")
-    public UserDto getUserByUsername(@PathVariable String username) {
+    public UserDto getUserByUsername(
+            @Parameter(description = "Имя пользователя", required = true, example = "alex123")
+            @PathVariable String username) {
         return userService.getUserByUsername(username);
     }
 
+    @Operation(
+            summary = "Получить список всех пользователей",
+            description = "Возвращает список всех зарегистрированных пользователей"
+    )
     @GetMapping
     public List<UserDto> getAllUsers() {
         return userService.getAllUsers();
     }
 
+    @Operation(
+            summary = "Получить количество пользователей",
+            description = "Возвращает общее количество пользователей в системе"
+    )
     @GetMapping("/count")
     public Long countAllUsers() {
         return userService.countAllUsers();
