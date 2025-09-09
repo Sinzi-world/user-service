@@ -12,9 +12,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
+import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.List;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -134,5 +138,71 @@ public class UserServiceImplTest {
 
         verify(userMapper, never()).update(any(), any());
         verify(userMapper, never()).toUserDto(any());
+    }
+
+    @Test
+    public void testGetUserById_Success() {
+        when(userValidator.checkUserExists(
+                ArgumentMatchers.<Supplier<Optional<User>>>any(), anyString()))
+                .thenReturn(userEntity);
+        when(userMapper.toUserDto(userEntity)).thenReturn(userDto);
+
+        UserDto result = userService.getUserById(1L);
+
+        assertNotNull(result);
+        assertEquals(userDto.getId(), result.getId());
+        assertEquals(userDto.getUsername(), result.getUsername());
+        assertEquals(userDto.getEmail(), result.getEmail());
+
+        verify(userValidator, times(1))
+                .checkUserExists(ArgumentMatchers.<Supplier<Optional<User>>>any(), anyString());
+        verify(userMapper, times(1)).toUserDto(userEntity);
+    }
+
+    @Test
+    public void testGetUserByUsername_Success() {
+        when(userValidator.checkUserExists(
+                ArgumentMatchers.<Supplier<Optional<User>>>any(), anyString()))
+                .thenReturn(userEntity);
+        when(userMapper.toUserDto(userEntity)).thenReturn(userDto);
+
+        UserDto result = userService.getUserByUsername("Alex");
+
+        assertNotNull(result);
+        assertEquals(userDto.getId(), result.getId());
+        assertEquals(userDto.getUsername(), result.getUsername());
+        assertEquals(userDto.getEmail(), result.getEmail());
+
+        verify(userValidator, times(1))
+                .checkUserExists(ArgumentMatchers.<Supplier<Optional<User>>>any(), anyString());
+        verify(userMapper, times(1)).toUserDto(userEntity);
+    }
+
+    @Test
+    public void testGetAllUsers() {
+        List<User> users = List.of(userEntity);
+        List<UserDto> dtos = List.of(userDto);
+
+        when(userRepository.findAll()).thenReturn(users);
+        when(userMapper.toUserDto(userEntity)).thenReturn(userDto);
+
+        List<UserDto> result = userService.getAllUsers();
+
+        assertNotNull(result);
+        assertEquals(1, result.size());
+        assertEquals(userDto.getUsername(), result.get(0).getUsername());
+
+        verify(userRepository, times(1)).findAll();
+        verify(userMapper, times(1)).toUserDto(userEntity);
+    }
+
+    @Test
+    public void testCountAllUsers() {
+        when(userRepository.count()).thenReturn(5L);
+
+        Long count = userService.countAllUsers();
+
+        assertEquals(5L, count);
+        verify(userRepository, times(1)).count();
     }
 }
