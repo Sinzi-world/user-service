@@ -12,13 +12,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
-import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Supplier;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -45,7 +42,6 @@ public class UserServiceImplTest {
 
     @BeforeEach
     void setUp() {
-
         createUserDto = CreateUserDto.builder()
                 .username("Alex")
                 .password("secret123")
@@ -68,7 +64,6 @@ public class UserServiceImplTest {
 
     @Test
     public void testUserCreate() {
-
         when(userMapper.toUserEntity(createUserDto)).thenReturn(userEntity);
         when(userMapper.toUserDto(userEntity)).thenReturn(userDto);
 
@@ -94,7 +89,6 @@ public class UserServiceImplTest {
     @SuppressWarnings("unchecked")
     @Test
     public void testUpdateUser_Success() {
-
         UpdateUserDto updateUserDto = new UpdateUserDto();
         updateUserDto.setUsername("UpdatedAlex");
         updateUserDto.setEmail("updated@example.com");
@@ -103,7 +97,6 @@ public class UserServiceImplTest {
                 any(Supplier.class),
                 eq("Пользователь с ID: " + userEntity.getId() + " не найден")
         )).thenReturn(userEntity);
-
         when(userMapper.toUserDto(userEntity)).thenReturn(userDto);
 
         UserDto result = userService.updateUser(userEntity.getId(), updateUserDto);
@@ -121,7 +114,6 @@ public class UserServiceImplTest {
     @SuppressWarnings("unchecked")
     @Test
     public void testUpdateUser_UserNotFound() {
-
         UpdateUserDto updateUserDto = new UpdateUserDto();
         updateUserDto.setUsername("UpdatedAlex");
         updateUserDto.setEmail("updated@example.com");
@@ -140,14 +132,16 @@ public class UserServiceImplTest {
         verify(userMapper, never()).toUserDto(any());
     }
 
+    @SuppressWarnings("unchecked")
     @Test
     public void testGetUserById_Success() {
         when(userValidator.checkUserExists(
-                ArgumentMatchers.<Supplier<Optional<User>>>any(), anyString()))
-                .thenReturn(userEntity);
+                any(Supplier.class),
+                eq("Пользователь с ID: " + userEntity.getId() + " не найден")
+        )).thenReturn(userEntity);
         when(userMapper.toUserDto(userEntity)).thenReturn(userDto);
 
-        UserDto result = userService.getUserById(1L);
+        UserDto result = userService.getUserById(userEntity.getId());
 
         assertNotNull(result);
         assertEquals(userDto.getId(), result.getId());
@@ -155,18 +149,20 @@ public class UserServiceImplTest {
         assertEquals(userDto.getEmail(), result.getEmail());
 
         verify(userValidator, times(1))
-                .checkUserExists(ArgumentMatchers.<Supplier<Optional<User>>>any(), anyString());
+                .checkUserExists(any(Supplier.class), eq("Пользователь с ID: " + userEntity.getId() + " не найден"));
         verify(userMapper, times(1)).toUserDto(userEntity);
     }
 
+    @SuppressWarnings("unchecked")
     @Test
     public void testGetUserByUsername_Success() {
         when(userValidator.checkUserExists(
-                ArgumentMatchers.<Supplier<Optional<User>>>any(), anyString()))
-                .thenReturn(userEntity);
+                any(Supplier.class),
+                eq("Пользователь с никнеймом " + userEntity.getUsername() + " не найден")
+        )).thenReturn(userEntity);
         when(userMapper.toUserDto(userEntity)).thenReturn(userDto);
 
-        UserDto result = userService.getUserByUsername("Alex");
+        UserDto result = userService.getUserByUsername(userEntity.getUsername());
 
         assertNotNull(result);
         assertEquals(userDto.getId(), result.getId());
@@ -174,14 +170,13 @@ public class UserServiceImplTest {
         assertEquals(userDto.getEmail(), result.getEmail());
 
         verify(userValidator, times(1))
-                .checkUserExists(ArgumentMatchers.<Supplier<Optional<User>>>any(), anyString());
+                .checkUserExists(any(Supplier.class), eq("Пользователь с никнеймом " + userEntity.getUsername() + " не найден"));
         verify(userMapper, times(1)).toUserDto(userEntity);
     }
 
     @Test
     public void testGetAllUsers() {
         List<User> users = List.of(userEntity);
-        List<UserDto> dtos = List.of(userDto);
 
         when(userRepository.findAll()).thenReturn(users);
         when(userMapper.toUserDto(userEntity)).thenReturn(userDto);
