@@ -1,10 +1,10 @@
 package com.blog.user_service.service.impl;
 
-import com.blog.user_service.dto.user.UpdateUserDto;
+import com.blog.user_service.model.dto.user.UpdateUserDto;
 import com.blog.user_service.mapper.UserMapper;
-import com.blog.user_service.dto.user.CreateUserDto;
-import com.blog.user_service.dto.user.UserDto;
-import com.blog.user_service.entity.user.User;
+import com.blog.user_service.model.dto.user.CreateUserDto;
+import com.blog.user_service.model.dto.user.UserDto;
+import com.blog.user_service.model.entity.user.User;
 import com.blog.user_service.repository.user.UserRepository;
 import com.blog.user_service.service.user.UserService;
 import lombok.RequiredArgsConstructor;

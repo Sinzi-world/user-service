@@ -1,8 +1,8 @@
 package com.blog.user_service.controller.user;
 
-import com.blog.user_service.dto.user.CreateUserDto;
-import com.blog.user_service.dto.user.UpdateUserDto;
-import com.blog.user_service.dto.user.UserDto;
+import com.blog.user_service.model.dto.user.CreateUserDto;
+import com.blog.user_service.model.dto.user.UpdateUserDto;
+import com.blog.user_service.model.dto.user.UserDto;
 import com.blog.user_service.service.impl.UserServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

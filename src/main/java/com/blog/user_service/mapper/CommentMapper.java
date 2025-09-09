@@ -1,7 +1,7 @@
 package com.blog.user_service.mapper;
 
-import com.blog.user_service.dto.blog.comment.CommentDto;
-import com.blog.user_service.entity.comment.Comment;
+import com.blog.user_service.model.dto.comment.CommentDto;
+import com.blog.user_service.model.entity.comment.Comment;
 import org.mapstruct.*;
 
 @Mapper(componentModel = "spring", uses = UserMapper.class, unmappedTargetPolicy = ReportingPolicy.IGNORE)

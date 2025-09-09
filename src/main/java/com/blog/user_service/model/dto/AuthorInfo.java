@@ -1,4 +1,4 @@
-package com.blog.user_service.dto.blog;
+package com.blog.user_service.model.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;

@@ -1,6 +1,6 @@
 package com.blog.user_service.controller.post;
 
-import com.blog.user_service.dto.blog.post.PostDto;
+import com.blog.user_service.model.dto.post.PostDto;
 import com.blog.user_service.service.impl.PostServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

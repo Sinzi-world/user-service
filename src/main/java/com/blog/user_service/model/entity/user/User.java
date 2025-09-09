@@ -1,6 +1,6 @@
-package com.blog.user_service.entity.user;
+package com.blog.user_service.model.entity.user;
 
-import com.blog.user_service.entity.post.Post;
+import com.blog.user_service.model.entity.post.Post;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

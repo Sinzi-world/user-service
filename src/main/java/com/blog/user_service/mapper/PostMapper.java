@@ -1,9 +1,9 @@
 package com.blog.user_service.mapper;
 
-import com.blog.user_service.dto.blog.AuthorInfo;
-import com.blog.user_service.dto.blog.post.PostDto;
-import com.blog.user_service.entity.post.Post;
-import com.blog.user_service.entity.user.User;
+import com.blog.user_service.model.dto.AuthorInfo;
+import com.blog.user_service.model.dto.post.PostDto;
+import com.blog.user_service.model.entity.post.Post;
+import com.blog.user_service.model.entity.user.User;
 import org.mapstruct.*;
 
 @Mapper(componentModel = "spring",

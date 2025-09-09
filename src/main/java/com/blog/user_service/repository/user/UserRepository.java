@@ -1,6 +1,6 @@
 package com.blog.user_service.repository.user;
 
-import com.blog.user_service.entity.user.User;
+import com.blog.user_service.model.entity.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

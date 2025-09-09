@@ -1,6 +1,6 @@
 package com.blog.user_service.repository.post;
 
-import com.blog.user_service.entity.post.Post;
+import com.blog.user_service.model.entity.post.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

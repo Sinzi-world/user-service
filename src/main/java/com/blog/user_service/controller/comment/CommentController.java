@@ -1,7 +1,7 @@
 package com.blog.user_service.controller.comment;
 
 
-import com.blog.user_service.dto.blog.comment.CommentDto;
+import com.blog.user_service.model.dto.comment.CommentDto;
 import com.blog.user_service.service.impl.CommentServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

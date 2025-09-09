@@ -1,6 +1,6 @@
-package com.blog.user_service.dto.blog.comment;
+package com.blog.user_service.model.dto.comment;
 
-import com.blog.user_service.dto.blog.AuthorInfo;
+import com.blog.user_service.model.dto.AuthorInfo;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,9 +1,9 @@
 package com.blog.user_service.service.impl;
 
-import com.blog.user_service.dto.blog.comment.CommentDto;
-import com.blog.user_service.entity.comment.Comment;
-import com.blog.user_service.entity.post.Post;
-import com.blog.user_service.entity.user.User;
+import com.blog.user_service.model.dto.comment.CommentDto;
+import com.blog.user_service.model.entity.comment.Comment;
+import com.blog.user_service.model.entity.post.Post;
+import com.blog.user_service.model.entity.user.User;
 import com.blog.user_service.mapper.CommentMapper;
 import com.blog.user_service.repository.comment.CommentRepository;
 import com.blog.user_service.repository.post.PostRepository;

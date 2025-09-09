@@ -1,8 +1,8 @@
 package com.blog.user_service.service.impl;
 
-import com.blog.user_service.dto.blog.post.PostDto;
-import com.blog.user_service.entity.post.Post;
-import com.blog.user_service.entity.user.User;
+import com.blog.user_service.model.dto.post.PostDto;
+import com.blog.user_service.model.entity.post.Post;
+import com.blog.user_service.model.entity.user.User;
 import com.blog.user_service.mapper.PostMapper;
 import com.blog.user_service.repository.post.PostRepository;
 import com.blog.user_service.repository.user.UserRepository;
