@@ -7,6 +7,7 @@ import com.blog.user_service.model.dto.user.UserDto;
 import com.blog.user_service.model.entity.user.User;
 import com.blog.user_service.repository.user.UserRepository;
 import com.blog.user_service.service.user.UserService;
+import com.blog.user_service.validator.UserValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserMapper userMapper;
     private final UserRepository userRepository;
+    private final UserValidator userValidator;
 
     @Override
     public UserDto createUser(CreateUserDto createUserDto) {
@@ -30,33 +32,30 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto updateUser(Long userId, UpdateUserDto updateUserDto) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> {
-                    log.debug("User not found");
-                    return new IllegalArgumentException("Пользователь с ID: " + userId + " не найден");
-                });
-        userMapper.update(updateUserDto, user);
-        return userMapper.toUserDto(user);
+        User userById = userValidator.checkUserExists(
+                () -> userRepository.findById(userId),
+                "Пользователь с ID: " + userId + " не найден"
+        );
+        userMapper.update(updateUserDto, userById);
+        return userMapper.toUserDto(userById);
     }
 
     @Override
     public UserDto getUserById(Long userId) {
-        return userRepository.findById(userId)
-                .map(userMapper::toUserDto)
-                .orElseThrow(() -> {
-                    log.debug("User not found");
-                    return new IllegalArgumentException("Пользователь с ID: " + userId + " не найден");
-                });
+        User user = userValidator.checkUserExists(
+                () -> userRepository.findById(userId),
+                "Пользователь с ID: " + userId + " не найден"
+        );
+        return userMapper.toUserDto(user);
     }
 
     @Override
     public UserDto getUserByUsername(String username) {
-        return userRepository.findByUsername(username)
-                .map(userMapper::toUserDto)
-                .orElseThrow(() -> {
-                    log.debug("User not found");
-                    return new IllegalArgumentException("Пользователь с никнеймом " + username + " не найден");
-                });
+        User user = userValidator.checkUserExists(
+                () -> userRepository.findByUsername(username),
+                "Пользователь с никнеймом " + username + " не найден"
+        );
+        return userMapper.toUserDto(user);
     }
 
     @Override
