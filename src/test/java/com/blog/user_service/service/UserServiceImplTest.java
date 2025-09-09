@@ -87,6 +87,7 @@ public class UserServiceImplTest {
         assertEquals(createUserDto.getPassword(), capturedUser.getPassword());
     }
 
+    @SuppressWarnings("unchecked")
     @Test
     public void testUpdateUser_Success() {
 
@@ -113,6 +114,7 @@ public class UserServiceImplTest {
         verify(userMapper, times(1)).toUserDto(userEntity);
     }
 
+    @SuppressWarnings("unchecked")
     @Test
     public void testUpdateUser_UserNotFound() {
 
