@@ -13,6 +13,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,6 +30,7 @@ public class CommentServiceImpl implements CommentService {
     private final CommentMapper commentMapper;
 
     @Override
+    @Transactional
     public CommentDto createComment(Long userId, Long postId, CommentDto commentDto) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> {
@@ -50,11 +52,13 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    @Transactional
     public CommentDto updateComment(CommentDto commentDto) {
         return null;
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<CommentDto> getCommentsByUserId(Long userId) {
         userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User with id " + userId + " not found"));
@@ -68,6 +72,7 @@ public class CommentServiceImpl implements CommentService {
 
 
     @Override
+    @Transactional(readOnly = true)
     public List<CommentDto> getCommentsByPostId(Long postId) {
         return List.of();
     }

@@ -1,14 +1,14 @@
 CREATE TABLE users
 (
     id         INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY UNIQUE,
-    username   VARCHAR(64) UNIQUE       NOT NULL,
-    password   VARCHAR(128)             NOT NULL,
-    email      VARCHAR(64) UNIQUE       NOT NULL,
+    username   VARCHAR(64) UNIQUE NOT NULL,
+    password   VARCHAR(128)       NOT NULL,
+    email      VARCHAR(64) UNIQUE NOT NULL,
     phone      VARCHAR(32) UNIQUE,
+    roles      VARCHAR(16),
     about_me   VARCHAR(4096),
-    active     BOOLEAN     DEFAULT true NOT NULL,
     city       VARCHAR(64),
-    country    VARCHAR(64)              NOT NULL,
+    country    VARCHAR(64)        NOT NULL,
     experience INT,
     created_at TIMESTAMPTZ DEFAULT current_timestamp,
     updated_at TIMESTAMPTZ DEFAULT current_timestamp
@@ -24,6 +24,15 @@ CREATE TABLE subscription
 
     CONSTRAINT fk_follower_id FOREIGN KEY (follower_id) REFERENCES users (id) ON DELETE CASCADE,
     CONSTRAINT fk_followee_id FOREIGN KEY (followee_id) REFERENCES users (id) ON DELETE CASCADE
+);
+
+CREATE TABLE user_roles
+(
+    id      INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY UNIQUE,
+    user_id INT         NOT NULL,
+    role    VARCHAR(32) NOT NULL,
+    CONSTRAINT fk_user_roles_user FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
+    CONSTRAINT pk_user_roles PRIMARY KEY (user_id, role)
 );
 
 CREATE TABLE posts

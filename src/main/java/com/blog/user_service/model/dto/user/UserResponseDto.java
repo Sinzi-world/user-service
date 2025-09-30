@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Schema(description = "Объект отображения пользователя")
-public class UserDto {
+public class UserResponseDto {
 
     @Schema(description = "уникальный идентификатор пользователя")
     private Long id;

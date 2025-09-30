@@ -2,7 +2,7 @@ package com.blog.user_service.mapper;
 
 import com.blog.user_service.model.dto.user.CreateUserDto;
 import com.blog.user_service.model.dto.user.UpdateUserDto;
-import com.blog.user_service.model.dto.user.UserDto;
+import com.blog.user_service.model.dto.user.UserResponseDto;
 import com.blog.user_service.model.entity.user.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -17,7 +17,7 @@ public interface UserMapper {
 
     @Mapping(source = "createdAt", target = "createdAt", dateFormat = "yyyy-MM-dd HH:mm:ss")
     @Mapping(source = "updatedAt", target = "updatedAt", dateFormat = "yyyy-MM-dd HH:mm:ss")
-    UserDto toUserDto(User user);
+    UserResponseDto toUserDto(User user);
 
 
     void update(UpdateUserDto updateUserDto,@MappingTarget User user);

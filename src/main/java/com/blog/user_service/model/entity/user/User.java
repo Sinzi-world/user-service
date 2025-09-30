@@ -10,6 +10,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Builder
@@ -35,9 +36,6 @@ public class User {
     @Column(length = 128, nullable = false)
     private String password;
 
-    @Column(nullable = false)
-    private boolean active = true;
-
     @Column(length = 4096)
     private String aboutMe;
 
@@ -48,6 +46,12 @@ public class User {
     private String city;
 
     private Integer experience;
+
+    @Column(name = "role")
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "users_roles")
+    @Enumerated(value = EnumType.STRING)
+    private Set<UserRoles> roles;
 
     @CreationTimestamp
     private LocalDateTime createdAt;

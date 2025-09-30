@@ -16,3 +16,7 @@ springdoc:
     path: /api-docs
   swagger-ui:
     path: /swagger
+
+logging:
+  level:
+    org.springframework.security: DEBUG

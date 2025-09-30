@@ -2,21 +2,21 @@ package com.blog.user_service.service.user;
 
 import com.blog.user_service.model.dto.user.CreateUserDto;
 import com.blog.user_service.model.dto.user.UpdateUserDto;
-import com.blog.user_service.model.dto.user.UserDto;
+import com.blog.user_service.model.dto.user.UserResponseDto;
 
 import java.util.List;
 
 public interface UserService {
 
-    UserDto createUser(CreateUserDto createUserDto);
+    UserResponseDto registerUser(CreateUserDto createUserDto);
 
-    UserDto updateUser(Long userId, UpdateUserDto updateUserDto);
+    UserResponseDto updateUser(Long userId, UpdateUserDto updateUserDto);
 
-    UserDto getUserById(Long userId);
+    UserResponseDto getUserById(Long userId);
 
-    UserDto getUserByUsername(String username);
+    UserResponseDto getUserByUsername(String username);
 
-    List<UserDto> getAllUsers();
+    List<UserResponseDto> getAllUsers();
 
     Long countAllUsers();
 

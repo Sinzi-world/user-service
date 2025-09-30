@@ -10,6 +10,7 @@ import com.blog.user_service.service.post.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -26,6 +27,7 @@ public class PostServiceImpl implements PostService {
 
 
     @Override
+    @Transactional
     public PostDto createPost(Long authorId, PostDto postDto){
         User author = userRepository.findById(authorId)
                 .orElseThrow(() -> {
@@ -41,6 +43,7 @@ public class PostServiceImpl implements PostService {
 
 
     @Override
+    @Transactional
     public PostDto updatePost(Long postId, PostDto postDto) {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new IllegalArgumentException("No post found with id " + postId));
@@ -54,6 +57,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public PostDto getPostById(Long postId) {
         return postRepository.findById(postId)
                 .map(postMapper::toDto)
@@ -64,6 +68,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<PostDto> getAllPosts() {
         return postRepository.findAll()
                 .stream()
@@ -72,6 +77,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<PostDto> getPostsByAuthorId(Long authorId) {
         return postRepository.findAllByAuthorId(authorId)
                 .stream()

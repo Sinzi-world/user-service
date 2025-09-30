@@ -2,7 +2,7 @@ package com.blog.user_service.controller.user;
 
 import com.blog.user_service.model.dto.user.CreateUserDto;
 import com.blog.user_service.model.dto.user.UpdateUserDto;
-import com.blog.user_service.model.dto.user.UserDto;
+import com.blog.user_service.model.dto.user.UserResponseDto;
 import com.blog.user_service.service.impl.UserServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -31,13 +31,13 @@ public class UserController {
     )
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Пользователь успешно создан",
-                    content = @Content(schema = @Schema(implementation = UserDto.class))),
+                    content = @Content(schema = @Schema(implementation = UserResponseDto.class))),
             @ApiResponse(responseCode = "400", description = "Некорректные данные запроса"),
             @ApiResponse(responseCode = "409", description = "Пользователь с таким email или username уже существует")
     })
-    @PostMapping
-    public UserDto createUser(@RequestBody @Valid CreateUserDto dto) {
-        return userService.createUser(dto);
+    @PostMapping("/registration")
+    public UserResponseDto registerUser(@RequestBody @Valid CreateUserDto dto) {
+        return userService.registerUser(dto);
     }
 
     @Operation(
@@ -46,11 +46,11 @@ public class UserController {
     )
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Пользователь успешно обновлён",
-                    content = @Content(schema = @Schema(implementation = UserDto.class))),
+                    content = @Content(schema = @Schema(implementation = UserResponseDto.class))),
             @ApiResponse(responseCode = "404", description = "Пользователь не найден")
     })
     @PutMapping("/{id}")
-    public UserDto updateUser(
+    public UserResponseDto updateUser(
             @Parameter(description = "ID пользователя", required = true)
             @PathVariable Long id,
             @RequestBody @Valid UpdateUserDto dto) {
@@ -62,7 +62,7 @@ public class UserController {
             description = "Возвращает информацию о пользователе по его идентификатору"
     )
     @GetMapping("/{id}")
-    public UserDto getUser(
+    public UserResponseDto getUser(
             @Parameter(description = "ID пользователя", required = true)
             @PathVariable Long id) {
         return userService.getUserById(id);
@@ -73,7 +73,7 @@ public class UserController {
             description = "Возвращает информацию о пользователе по его имени"
     )
     @GetMapping("/username/{username}")
-    public UserDto getUserByUsername(
+    public UserResponseDto getUserByUsername(
             @Parameter(description = "Имя пользователя", required = true, example = "alex123")
             @PathVariable String username) {
         return userService.getUserByUsername(username);
@@ -83,8 +83,8 @@ public class UserController {
             summary = "Получить список всех пользователей",
             description = "Возвращает список всех зарегистрированных пользователей"
     )
-    @GetMapping
-    public List<UserDto> getAllUsers() {
+    @GetMapping("/list")
+    public List<UserResponseDto> getAllUsers() {
         return userService.getAllUsers();
     }
 
