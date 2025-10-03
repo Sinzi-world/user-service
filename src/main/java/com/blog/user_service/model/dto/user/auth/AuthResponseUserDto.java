@@ -29,4 +29,7 @@ public class AuthResponseUserDto{
     @Schema(description = "Список ролей пользователя")
     private Set<UserRoles> roles;
 
+    @Schema(description = "Токен JWT")
+    private String token;
+
 }

@@ -25,20 +25,20 @@ public class UserController {
 
     private final UserServiceImpl userService;
 
-    @Operation(
-            summary = "Создать пользователя",
-            description = "Создаёт нового пользователя в системе"
-    )
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Пользователь успешно создан",
-                    content = @Content(schema = @Schema(implementation = UserResponseDto.class))),
-            @ApiResponse(responseCode = "400", description = "Некорректные данные запроса"),
-            @ApiResponse(responseCode = "409", description = "Пользователь с таким email или username уже существует")
-    })
-    @PostMapping("/registration")
-    public UserResponseDto registerUser(@RequestBody @Valid CreateUserDto dto) {
-        return userService.registerUser(dto);
-    }
+//    @Operation(
+//            summary = "Создать пользователя",
+//            description = "Создаёт нового пользователя в системе"
+//    )
+//    @ApiResponses({
+//            @ApiResponse(responseCode = "200", description = "Пользователь успешно создан",
+//                    content = @Content(schema = @Schema(implementation = UserResponseDto.class))),
+//            @ApiResponse(responseCode = "400", description = "Некорректные данные запроса"),
+//            @ApiResponse(responseCode = "409", description = "Пользователь с таким email или username уже существует")
+//    })
+//    @PostMapping("/registration")
+//    public UserResponseDto registerUser(@RequestBody @Valid CreateUserDto dto) {
+//        return userService.registerUser(dto);
+//    }
 
     @Operation(
             summary = "Обновить пользователя",

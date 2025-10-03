@@ -11,6 +11,11 @@ spring:
   flyway:
     enabled: true
 
+security:
+  jwt:
+    secret-key: "+p2qrOFnSogWqO/p/vFjrKZDkaz+6CMOC7ianV5K+Go="
+    expiration: 86400000 #one day
+
 springdoc:
   api-docs:
     path: /api-docs

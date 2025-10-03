@@ -1,11 +1,16 @@
 package com.blog.user_service.service.impl;
 
 import com.blog.user_service.mapper.AuthMapper;
+import com.blog.user_service.mapper.UserMapper;
+import com.blog.user_service.model.dto.user.CreateUserDto;
 import com.blog.user_service.model.dto.user.auth.AuthRequestUserDto;
 import com.blog.user_service.model.dto.user.auth.AuthResponseUserDto;
 import com.blog.user_service.model.dto.user.auth.ChangePasswordDto;
 import com.blog.user_service.model.entity.user.User;
+import com.blog.user_service.model.entity.user.UserRoles;
 import com.blog.user_service.repository.user.UserRepository;
+import com.blog.user_service.security.CustomUserDetails;
+import com.blog.user_service.security.service.JwtService;
 import com.blog.user_service.service.user.AuthService;
 import com.blog.user_service.validator.UserValidator;
 import jakarta.transaction.Transactional;
@@ -16,15 +21,31 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Set;
+
 @Service
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
 
     private final UserRepository userRepository;
+    private final UserMapper userMapper;
     private final AuthMapper authMapper;
     private final UserValidator userValidator;
     private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
 
+    @Override
+    @Transactional
+    public AuthResponseUserDto registerUser(CreateUserDto createUserDto) {
+        User user = userMapper.toUserEntity(createUserDto);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRoles(Set.of(UserRoles.ROLE_USER));
+        userRepository.save(user);
+        String token = jwtService.generateToken(new CustomUserDetails(user));
+        AuthResponseUserDto responseDto = authMapper.toUserDto(user);
+        responseDto.setToken(token);
+        return responseDto;
+    }
 
     @Override
     @Transactional
@@ -39,7 +60,13 @@ public class AuthServiceImpl implements AuthService {
             throw new IllegalArgumentException("Неверный пароль");
         }
 
-        return authMapper.toUserDto(user);
+        String token = jwtService.generateToken(new CustomUserDetails(user));
+
+        AuthResponseUserDto responseDto = authMapper.toUserDto(user);
+
+        responseDto.setToken(token);
+
+        return responseDto;
     }
 
     @Override

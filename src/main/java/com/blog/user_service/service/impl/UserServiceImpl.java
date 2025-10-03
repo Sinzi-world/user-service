@@ -28,15 +28,15 @@ public class UserServiceImpl implements UserService {
     private final UserValidator userValidator;
     private final PasswordEncoder passwordEncoder;
 
-    @Override
-    @Transactional
-    public UserResponseDto registerUser(CreateUserDto createUserDto) {
-        User user = userMapper.toUserEntity(createUserDto);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRoles(Set.of(UserRoles.ROLE_USER));
-        userRepository.save(user);
-        return userMapper.toUserDto(user);
-    }
+//    @Override
+//    @Transactional
+//    public UserResponseDto registerUser(CreateUserDto createUserDto) {
+//        User user = userMapper.toUserEntity(createUserDto);
+//        user.setPassword(passwordEncoder.encode(user.getPassword()));
+//        user.setRoles(Set.of(UserRoles.ROLE_USER));
+//        userRepository.save(user);
+//        return userMapper.toUserDto(user);
+//    }
 
     @Override
     @Transactional
