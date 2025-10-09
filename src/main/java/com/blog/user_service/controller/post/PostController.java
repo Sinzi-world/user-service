@@ -30,6 +30,7 @@ public class PostController {
             @ApiResponse(responseCode = "200", description = "Пост успешно создан",
                     content = @Content(schema = @Schema(implementation = PostDto.class))),
             @ApiResponse(responseCode = "400", description = "Некорректные данные запроса"),
+            @ApiResponse(responseCode = "403", description = "Отказано в доступе"),
             @ApiResponse(responseCode = "404", description = "Автор не найден")
     })
     @PostMapping("/author/{authorId}")
@@ -47,6 +48,7 @@ public class PostController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Пост успешно обновлён",
                     content = @Content(schema = @Schema(implementation = PostDto.class))),
+            @ApiResponse(responseCode = "403", description = "Отказано в доступе"),
             @ApiResponse(responseCode = "404", description = "Пост не найден")
     })
     @PutMapping("/update/{postId}")
@@ -61,6 +63,12 @@ public class PostController {
             summary = "Получить пост по ID",
             description = "Возвращает информацию о посте по его идентификатору"
     )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Пост успешно получен по идентификатору",
+                    content = @Content(schema = @Schema(implementation = PostDto.class))),
+            @ApiResponse(responseCode = "403", description = "Отказано в доступе"),
+            @ApiResponse(responseCode = "404", description = "Пост не найден")
+    })
     @GetMapping("/{postId}")
     public PostDto getPostById(
             @Parameter(description = "ID поста", required = true)
@@ -72,6 +80,7 @@ public class PostController {
             summary = "Получить список всех постов",
             description = "Возвращает список всех постов в системе"
     )
+    @ApiResponse(responseCode = "403", description = "Отказано в доступе")
     @GetMapping
     public List<PostDto> getAllPosts() {
         return postService.getAllPosts();
@@ -81,6 +90,7 @@ public class PostController {
             summary = "Получить посты автора",
             description = "Возвращает список постов указанного автора по его ID"
     )
+    @ApiResponse(responseCode = "403", description = "Отказано в доступе")
     @GetMapping("/post-author/{authorId}")
     public List<PostDto> getPostsByAuthorId(
             @Parameter(description = "ID автора", required = true)

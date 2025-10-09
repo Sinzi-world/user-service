@@ -1,6 +1,5 @@
 package com.blog.user_service.controller.user;
 
-import com.blog.user_service.model.dto.user.CreateUserDto;
 import com.blog.user_service.model.dto.user.UpdateUserDto;
 import com.blog.user_service.model.dto.user.UserResponseDto;
 import com.blog.user_service.service.impl.UserServiceImpl;
@@ -13,7 +12,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
 import jakarta.validation.Valid;
 import java.util.List;
 
@@ -25,20 +23,6 @@ public class UserController {
 
     private final UserServiceImpl userService;
 
-//    @Operation(
-//            summary = "Создать пользователя",
-//            description = "Создаёт нового пользователя в системе"
-//    )
-//    @ApiResponses({
-//            @ApiResponse(responseCode = "200", description = "Пользователь успешно создан",
-//                    content = @Content(schema = @Schema(implementation = UserResponseDto.class))),
-//            @ApiResponse(responseCode = "400", description = "Некорректные данные запроса"),
-//            @ApiResponse(responseCode = "409", description = "Пользователь с таким email или username уже существует")
-//    })
-//    @PostMapping("/registration")
-//    public UserResponseDto registerUser(@RequestBody @Valid CreateUserDto dto) {
-//        return userService.registerUser(dto);
-//    }
 
     @Operation(
             summary = "Обновить пользователя",
@@ -47,6 +31,7 @@ public class UserController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Пользователь успешно обновлён",
                     content = @Content(schema = @Schema(implementation = UserResponseDto.class))),
+            @ApiResponse(responseCode = "403", description = "Отказано в доступе"),
             @ApiResponse(responseCode = "404", description = "Пользователь не найден")
     })
     @PutMapping("/{id}")
@@ -61,6 +46,12 @@ public class UserController {
             summary = "Получить пользователя по ID",
             description = "Возвращает информацию о пользователе по его идентификатору"
     )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Пользователь успешно обновлён",
+                    content = @Content(schema = @Schema(implementation = UserResponseDto.class))),
+            @ApiResponse(responseCode = "403", description = "Отказано в доступе"),
+            @ApiResponse(responseCode = "404", description = "Пользователь не найден")
+    })
     @GetMapping("/{id}")
     public UserResponseDto getUser(
             @Parameter(description = "ID пользователя", required = true)
@@ -72,6 +63,12 @@ public class UserController {
             summary = "Получить пользователя по username",
             description = "Возвращает информацию о пользователе по его имени"
     )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Пользователь успешно обновлён",
+                    content = @Content(schema = @Schema(implementation = UserResponseDto.class))),
+            @ApiResponse(responseCode = "403", description = "Отказано в доступе"),
+            @ApiResponse(responseCode = "404", description = "Пользователь не найден")
+    })
     @GetMapping("/username/{username}")
     public UserResponseDto getUserByUsername(
             @Parameter(description = "Имя пользователя", required = true, example = "alex123")
@@ -83,6 +80,7 @@ public class UserController {
             summary = "Получить список всех пользователей",
             description = "Возвращает список всех зарегистрированных пользователей"
     )
+    @ApiResponse(responseCode = "403", description = "Отказано в доступе")
     @GetMapping("/list")
     public List<UserResponseDto> getAllUsers() {
         return userService.getAllUsers();
@@ -92,6 +90,7 @@ public class UserController {
             summary = "Получить количество пользователей",
             description = "Возвращает общее количество пользователей в системе"
     )
+    @ApiResponse(responseCode = "403", description = "Отказано в доступе")
     @GetMapping("/count")
     public Long countAllUsers() {
         return userService.countAllUsers();

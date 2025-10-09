@@ -1,14 +1,11 @@
 package com.blog.user_service.service.user;
 
-import com.blog.user_service.model.dto.user.CreateUserDto;
 import com.blog.user_service.model.dto.user.UpdateUserDto;
 import com.blog.user_service.model.dto.user.UserResponseDto;
 
 import java.util.List;
 
 public interface UserService {
-
-//    UserResponseDto registerUser(CreateUserDto createUserDto);
 
     UserResponseDto updateUser(Long userId, UpdateUserDto updateUserDto);
 

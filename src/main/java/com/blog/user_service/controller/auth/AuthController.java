@@ -2,7 +2,6 @@ package com.blog.user_service.controller.auth;
 
 
 import com.blog.user_service.model.dto.user.CreateUserDto;
-import com.blog.user_service.model.dto.user.UserResponseDto;
 import com.blog.user_service.model.dto.user.auth.AuthRequestUserDto;
 import com.blog.user_service.model.dto.user.auth.AuthResponseUserDto;
 import com.blog.user_service.model.dto.user.auth.ChangePasswordDto;
@@ -34,7 +33,7 @@ public class AuthController {
     )
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Пользователь успешно создан",
-                    content = @Content(schema = @Schema(implementation = UserResponseDto.class))),
+                    content = @Content(schema = @Schema(implementation = AuthResponseUserDto.class))),
             @ApiResponse(responseCode = "400", description = "Некорректные данные запроса"),
             @ApiResponse(responseCode = "409", description = "Пользователь с таким email или username уже существует")
     })
@@ -44,12 +43,26 @@ public class AuthController {
     }
 
 
-
+    @Operation(
+            summary = "Аутентифицировать пользователя",
+            description = "Позволяет пользователю залогиниться в системе"
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Пользователь успешно создан",
+                    content = @Content(schema = @Schema(implementation = AuthResponseUserDto.class))),
+            @ApiResponse(responseCode = "400", description = "Некорректные данные запроса"),
+            @ApiResponse(responseCode = "409", description = "Пользователь с таким email или username уже существует")
+    })
     @PostMapping("/login")
     public AuthResponseUserDto login(@RequestBody AuthRequestUserDto authRequestUserDto){
         return authService.login(authRequestUserDto);
     }
 
+    @Operation(
+            summary = "Сменить пароль авторизованного пользователя",
+            description = "Позволяет сменить пароль пользователя, аутентифицированного системой"
+    )
+    @ApiResponse(responseCode = "400", description = "Некорректные данные запроса")
     @PostMapping("/reset-password")
     public String changePassword(@RequestBody ChangePasswordDto changePasswordDto){
         return authService.changePassword(changePasswordDto);

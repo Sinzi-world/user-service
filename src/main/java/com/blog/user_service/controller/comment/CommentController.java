@@ -32,6 +32,7 @@ public class CommentController {
             @ApiResponse(responseCode = "200", description = "Комментарий успешно создан",
                     content = @Content(schema = @Schema(implementation = CommentDto.class))),
             @ApiResponse(responseCode = "400", description = "Некорректные данные запроса"),
+            @ApiResponse(responseCode = "403", description = "Отказано в доступе"),
             @ApiResponse(responseCode = "404", description = "Пользователь или пост не найдены")
     })
     @PostMapping
@@ -51,6 +52,7 @@ public class CommentController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Комментарии успешно получены",
                     content = @Content(array = @ArraySchema(schema = @Schema(implementation = CommentDto.class)))),
+            @ApiResponse(responseCode = "403", description = "Отказано в доступе"),
             @ApiResponse(responseCode = "404", description = "Пользователь не найден")
     })
     @GetMapping("/{userId}")
