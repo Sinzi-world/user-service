@@ -1,7 +1,7 @@
 package com.blog.user_service.controller.post;
 
 import com.blog.user_service.model.dto.post.PostDto;
-import com.blog.user_service.service.impl.PostServiceImpl;
+import com.blog.user_service.service.post.PostService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -20,7 +20,7 @@ import java.util.List;
 @Tag(name = "PostController", description = "API для работы с постами")
 public class PostController {
 
-    private final PostServiceImpl postService;
+    private final PostService postService;
 
     @Operation(
             summary = "Создать пост",
@@ -98,9 +98,8 @@ public class PostController {
         return postService.getPostsByAuthorId(authorId);
     }
 
-    //    @DeleteMapping("/{postId}")
-//    public void deletePostById(@PathVariable Long postId){
-//        postService.deletePostById(postId);
-//    }
-
+    @DeleteMapping("/{postId}")
+    public void deletePostById(@PathVariable Long postId) {
+        postService.deletePostById(postId);
+    }
 }

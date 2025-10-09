@@ -2,7 +2,7 @@ package com.blog.user_service.controller.user;
 
 import com.blog.user_service.model.dto.user.UpdateUserDto;
 import com.blog.user_service.model.dto.user.UserResponseDto;
-import com.blog.user_service.service.impl.UserServiceImpl;
+import com.blog.user_service.service.user.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -21,7 +21,7 @@ import java.util.List;
 @Tag(name = "UserController", description = "API для работы с пользователями")
 public class UserController {
 
-    private final UserServiceImpl userService;
+    private final UserService userService;
 
 
     @Operation(
@@ -96,9 +96,9 @@ public class UserController {
         return userService.countAllUsers();
     }
 
-//    @DeleteMapping("/{id}")
-//    public void deleteUser(@PathVariable Long id) {
-//        userService.deleteUserById(id);
-//    }
+    @DeleteMapping("/{id}")
+    public void deleteUser(@PathVariable Long id) {
+        userService.deleteUserById(id);
+    }
 }
 

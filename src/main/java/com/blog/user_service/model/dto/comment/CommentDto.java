@@ -16,10 +16,10 @@ import java.time.LocalDateTime;
 public class CommentDto {
 
     @Schema(description = "Уникальный идентификатор комментария", example = "1")
-    private long id;
+    private Long id;
 
     @Schema(description = "Идентификатор поста, к которому относится комментарий", example = "10")
-    private long postId;
+    private Long postId;
 
     @Schema(description = "Автор комментария (id и username)", implementation = AuthorInfo.class)
     private AuthorInfo user;

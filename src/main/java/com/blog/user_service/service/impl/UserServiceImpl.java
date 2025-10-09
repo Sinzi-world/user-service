@@ -84,17 +84,9 @@ public class UserServiceImpl implements UserService {
         return userRepository.count();
     }
 
-//    @Transactional
-//    public void deleteUserById(Long userId) {
-//        User user = userRepository.findById(userId)
-//                .orElseThrow(() -> new IllegalArgumentException("No user with id " + userId));
-//
-//        user.getFollowees().clear();
-//        user.getFollowers().clear();
-//
-//        user.getPosts().forEach(post -> post.setAuthor(null));
-//
-//        userRepository.delete(user);
-//    }
+    @Transactional
+    public void deleteUserById(Long userId) {
+        userRepository.deleteById(userId);
+    }
 
 }

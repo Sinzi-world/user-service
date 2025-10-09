@@ -43,10 +43,6 @@ public class UpdateUserDto {
     @Schema(description = "Опыт работы в годах", example = "3")
     private Integer experience;
 
-    @JsonProperty("roles")
-    @Schema(description = "Роль/и на платформе", example = "ADMIN")
-    private Set<UserRoles> roles;
-
     @Schema(description = "Информация о себе", example = "Java-разработчик, увлекаюсь спортом")
     private String aboutMe;
 }

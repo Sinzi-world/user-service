@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 public class PostDto {
 
     @Schema(description = "Уникальный идентификатор поста", example = "1")
-    private long id;
+    private Long id;
 
     @Schema(description = "Заголовок поста", example = "Мой первый пост")
     private String title;

@@ -76,4 +76,10 @@ public class CommentServiceImpl implements CommentService {
     public List<CommentDto> getCommentsByPostId(Long postId) {
         return List.of();
     }
+
+    @Override
+    @Transactional
+    public void deleteComment(Long id) {
+        commentRepository.deleteById(id);
+    }
 }

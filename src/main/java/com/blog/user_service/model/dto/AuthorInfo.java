@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Schema(description = "Объект для краткой информации об авторе поста")
 public class AuthorInfo {
 
-    @Schema(description = "Уникальный идентификатор пользователя")
+    @Schema(description = "Уникальный идентификатор пользователя", example = "1")
     private long id;
 
     @Schema(description = "Имя пользователя")
