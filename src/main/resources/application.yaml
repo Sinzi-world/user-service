@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/blogDB
+    url: jdbc:postgresql://localhost:5433/blogDB
     username: postgres
     password: ZimaBlue685
     driver-class-name: org.postgresql.Driver
@@ -10,6 +10,12 @@ spring:
     show-sql: true
   flyway:
     enabled: true
+
+  data:
+    redis:
+      port: 6379
+      host: localhost
+      password: ZimaBlue685
 
 security:
   jwt:

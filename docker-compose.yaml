@@ -1,18 +1,15 @@
 version: "3.8"
 
-services:
-  app:
-    build: .
-    container_name: user-service
-    depends_on:
-      - postgres
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/blogDB
-    ports:
-      - "8080:8080"
+volumes:
+  postgres-data:
+    driver: local
+  cache:
+    driver: local
 
+services:
   postgres:
-    image: postgres:15
+    image: postgres
+    restart: always
     container_name: postgres
     environment:
       POSTGRES_DB: blogDB
@@ -21,8 +18,14 @@ services:
     volumes:
       - postgres-data:/var/lib/postgresql/data
     ports:
-      - "5432:5432"
+      - "5433:5432"
 
-volumes:
-  postgres-data:
-    driver: local
+  redis:
+    image: redis:7.2-rc-alpine
+    restart: always
+    container_name: redis
+    ports:
+      - "6379:6379"
+    command: redis-server --save 20 1 --loglevel warning --requirepass ZimaBlue685
+    volumes:
+      - cache:/data
