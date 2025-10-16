@@ -3,6 +3,7 @@ package com.blog.user_service.service.impl;
 import com.blog.user_service.mapper.AuthMapper;
 import com.blog.user_service.mapper.UserMapper;
 import com.blog.user_service.model.dto.user.CreateUserDto;
+import com.blog.user_service.model.dto.user.RegUserResponseDto;
 import com.blog.user_service.model.dto.user.auth.AuthRequestUserDto;
 import com.blog.user_service.model.dto.user.auth.AuthResponseUserDto;
 import com.blog.user_service.model.dto.user.auth.ChangePasswordDto;
@@ -41,33 +42,68 @@ public class AuthServiceImpl implements AuthService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRoles(Set.of(UserRoles.ROLE_USER));
         userRepository.save(user);
-        String token = jwtService.generateToken(new CustomUserDetails(user));
-        AuthResponseUserDto responseDto = authMapper.toUserDto(user);
-        responseDto.setToken(token);
-        return responseDto;
+
+        return buildAuthResponse(user);
     }
 
     @Override
     @Transactional
     public AuthResponseUserDto login(AuthRequestUserDto requestUserDto) {
-        String username = requestUserDto.getUsername();
         User user = userValidator.checkUserExists(() ->
-                userRepository.findByUsername(username),
-                "Пользователь с никнеймом " + username + " не найден"
+                        userRepository.findByUsername(requestUserDto.getUsername()),
+                "Пользователь с никнеймом " + requestUserDto.getUsername() + " не найден"
         );
 
-        if (!passwordEncoder.matches(requestUserDto.getPassword(), user.getPassword())){
+        if (!passwordEncoder.matches(requestUserDto.getPassword(), user.getPassword())) {
             throw new IllegalArgumentException("Неверный пароль");
         }
 
-        String token = jwtService.generateToken(new CustomUserDetails(user));
-
-        AuthResponseUserDto responseDto = authMapper.toUserDto(user);
-
-        responseDto.setToken(token);
-
-        return responseDto;
+        return buildAuthResponse(user);
     }
+
+    /**
+     * Метод для создания AuthResponseUserDto с access и refresh токенами
+     */
+    private AuthResponseUserDto buildAuthResponse(User user) {
+        CustomUserDetails userDetails = new CustomUserDetails(user);
+
+        String accessToken = jwtService.generateToken(userDetails);
+        String refreshToken = jwtService.generateRefreshToken(userDetails);
+
+        RegUserResponseDto userDto = authMapper.toRegUserDto(user);
+
+        return AuthResponseUserDto.builder()
+                .user(userDto)
+                .roles(user.getRoles())
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .build();
+    }
+
+    @Override
+    @Transactional
+    public AuthResponseUserDto refreshToken(String refreshToken) {
+        String username = jwtService.extractUsername(refreshToken);
+        User user = userValidator.checkUserExists(() ->
+                        userRepository.findByUsername(username),
+                "Пользователь не найден");
+
+        if (!jwtService.isTokenValid(refreshToken, new CustomUserDetails(user))) {
+            throw new IllegalArgumentException("Неверный или просроченный refresh token");
+        }
+
+        String newAccessToken = jwtService.generateToken(new CustomUserDetails(user));
+
+        RegUserResponseDto userDto = authMapper.toRegUserDto(user);
+
+        return AuthResponseUserDto.builder()
+                .user(userDto)
+                .roles(user.getRoles())
+                .accessToken(newAccessToken)
+                .refreshToken(refreshToken)
+                .build();
+    }
+
 
     @Override
     @Transactional
@@ -80,7 +116,7 @@ public class AuthServiceImpl implements AuthService {
         String username = authentication.getName();
 
         User user = userValidator.checkUserExists(() ->
-                userRepository.findByUsername(username),
+                        userRepository.findByUsername(username),
                 "Пользователь не найден");
 
         if (!passwordEncoder.matches(changePasswordDto.getOldPassword(), user.getPassword())) {

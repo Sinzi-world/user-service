@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
@@ -56,6 +58,15 @@ public class AuthController {
     @PostMapping("/login")
     public AuthResponseUserDto login(@RequestBody AuthRequestUserDto authRequestUserDto){
         return authService.login(authRequestUserDto);
+    }
+
+    @PostMapping("/refresh")
+    public AuthResponseUserDto refreshToken(@RequestBody Map<String, String> request) {
+        String refreshToken = request.get("refreshToken");
+        if (refreshToken == null || refreshToken.isEmpty()) {
+            throw new IllegalArgumentException("Refresh token не предоставлен");
+        }
+        return authService.refreshToken(refreshToken);
     }
 
     @Operation(

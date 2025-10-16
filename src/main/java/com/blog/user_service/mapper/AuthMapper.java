@@ -1,6 +1,7 @@
 package com.blog.user_service.mapper;
 
 
+import com.blog.user_service.model.dto.user.RegUserResponseDto;
 import com.blog.user_service.model.dto.user.auth.AuthResponseUserDto;
 import com.blog.user_service.model.entity.user.User;
 import org.mapstruct.Mapper;
@@ -10,4 +11,6 @@ import org.mapstruct.ReportingPolicy;
 public interface AuthMapper {
 
     AuthResponseUserDto toUserDto(User user);
+
+    RegUserResponseDto toRegUserDto(User user);
 }

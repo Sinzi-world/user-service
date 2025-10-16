@@ -20,7 +20,8 @@ spring:
 security:
   jwt:
     secret-key: "+p2qrOFnSogWqO/p/vFjrKZDkaz+6CMOC7ianV5K+Go="
-    expiration: 86400000 #one day
+    access-expiration: 86400000 #one day
+    refresh-expiration: 604800000 #seven days
 
 springdoc:
   api-docs:
