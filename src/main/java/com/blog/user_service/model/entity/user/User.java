@@ -62,9 +62,14 @@ public class User {
     @OneToMany(mappedBy = "author")
     private List<Post> posts;
 
-    @OneToMany(mappedBy = "follower")
+    @ManyToMany
+    @JoinTable(
+            name = "subscriptions",
+            joinColumns = @JoinColumn(name = "follower_id"),
+            inverseJoinColumns = @JoinColumn(name = "followee_id")
+    )
     private List<User> followees;
 
-    @OneToMany(mappedBy = "followee")
+    @ManyToMany(mappedBy = "followees")
     private List<User> followers;
 }
