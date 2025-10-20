@@ -1,5 +1,6 @@
 package com.blog.user_service.model.entity.user;
 
+import com.blog.user_service.model.entity.subscription.Subscription;
 import com.blog.user_service.model.entity.post.Post;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -62,14 +63,9 @@ public class User {
     @OneToMany(mappedBy = "author")
     private List<Post> posts;
 
-    @ManyToMany
-    @JoinTable(
-            name = "subscriptions",
-            joinColumns = @JoinColumn(name = "follower_id"),
-            inverseJoinColumns = @JoinColumn(name = "followee_id")
-    )
-    private List<User> followees;
+    @OneToMany(mappedBy = "follower")
+    private List<Subscription> followees;
 
-    @ManyToMany(mappedBy = "followees")
-    private List<User> followers;
+    @OneToMany(mappedBy = "followee")
+    private List<Subscription> followers;
 }

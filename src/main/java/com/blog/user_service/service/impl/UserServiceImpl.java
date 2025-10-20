@@ -1,21 +1,18 @@
 package com.blog.user_service.service.impl;
 
 import com.blog.user_service.mapper.UserMapper;
-import com.blog.user_service.model.dto.user.CreateUserDto;
 import com.blog.user_service.model.dto.user.UpdateUserDto;
 import com.blog.user_service.model.dto.user.UserResponseDto;
 import com.blog.user_service.model.entity.user.User;
-import com.blog.user_service.model.entity.user.UserRoles;
+import com.blog.user_service.repository.subscription.SubscriptionRepository;
 import com.blog.user_service.repository.user.UserRepository;
 import com.blog.user_service.service.user.UserService;
 import com.blog.user_service.validator.UserValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -26,17 +23,7 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final UserRepository userRepository;
     private final UserValidator userValidator;
-    private final PasswordEncoder passwordEncoder;
-
-//    @Override
-//    @Transactional
-//    public UserResponseDto registerUser(CreateUserDto createUserDto) {
-//        User user = userMapper.toUserEntity(createUserDto);
-//        user.setPassword(passwordEncoder.encode(user.getPassword()));
-//        user.setRoles(Set.of(UserRoles.ROLE_USER));
-//        userRepository.save(user);
-//        return userMapper.toUserDto(user);
-//    }
+    private final SubscriptionRepository subscriptionRepository;
 
     @Override
     @Transactional
@@ -56,7 +43,7 @@ public class UserServiceImpl implements UserService {
                 () -> userRepository.findById(userId),
                 "Пользователь с ID: " + userId + " не найден"
         );
-        return userMapper.toUserDto(user);
+        return mapUserToDtoWithCounts(user);
     }
 
     @Override
@@ -66,7 +53,7 @@ public class UserServiceImpl implements UserService {
                 () -> userRepository.findByUsername(username),
                 "Пользователь с никнеймом " + username + " не найден"
         );
-        return userMapper.toUserDto(user);
+        return mapUserToDtoWithCounts(user);
     }
 
     @Override
@@ -74,9 +61,22 @@ public class UserServiceImpl implements UserService {
     public List<UserResponseDto> getAllUsers() {
         return userRepository.findAll()
                 .stream()
-                .map(userMapper::toUserDto)
+                .map(this::mapUserToDtoWithCounts)
                 .collect(Collectors.toList());
     }
+
+
+    private UserResponseDto mapUserToDtoWithCounts(User user) {
+        long followersCount = subscriptionRepository.countByFolloweeId(user.getId());
+        long followeesCount = subscriptionRepository.countByFollowerId(user.getId());
+
+        UserResponseDto dto = userMapper.toUserDto(user);
+        dto.setFollowersCount((int) followersCount);
+        dto.setFolloweesCount((int) followeesCount);
+
+        return dto;
+    }
+
 
     @Override
     @Transactional(readOnly = true)
@@ -88,5 +88,4 @@ public class UserServiceImpl implements UserService {
     public void deleteUserById(Long userId) {
         userRepository.deleteById(userId);
     }
-
 }

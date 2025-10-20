@@ -1,4 +1,4 @@
-package com.blog.user_service.model.entity;
+package com.blog.user_service.model.entity.subscription;
 
 import com.blog.user_service.model.entity.user.User;
 import jakarta.persistence.*;

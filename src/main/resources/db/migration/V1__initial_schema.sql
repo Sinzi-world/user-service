@@ -71,7 +71,6 @@ CREATE TABLE subscriptions
     follower_id BIGINT NOT NULL,
     followee_id BIGINT NOT NULL,
     created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
-    updated_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_follower FOREIGN KEY (follower_id)
         REFERENCES users (id) ON DELETE CASCADE,
     CONSTRAINT fk_followee FOREIGN KEY (followee_id)

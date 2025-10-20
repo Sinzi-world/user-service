@@ -46,6 +46,7 @@ public class SecurityConfig {
                                 "/api/users/**",
                                 "/api/comments/**",
                                 "/api/posts/**",
+                                "/api/subscriptions/**",
                                 "/api/auth/reset-password").authenticated()
                         .anyRequest().authenticated()
                 )
