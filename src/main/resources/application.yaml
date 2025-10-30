@@ -17,6 +17,9 @@ spring:
       host: localhost
       password: ZimaBlue685
 
+  kafka:
+    bootstrap-servers: localhost:9092
+
 security:
   jwt:
     secret-key: "+p2qrOFnSogWqO/p/vFjrKZDkaz+6CMOC7ianV5K+Go="
@@ -32,3 +35,4 @@ springdoc:
 logging:
   level:
     org.springframework.security: DEBUG
+    org.springframework.kafka: INFO
