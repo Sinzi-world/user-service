@@ -11,7 +11,14 @@ public class KafkaTopicConfig {
     @Bean
     public NewTopic analyticsTopic(){
         return TopicBuilder
-                .name("analytics")
+                .name("analytics-topic")
+                .build();
+    }
+
+    @Bean
+    public  NewTopic notificationTopic(){
+        return TopicBuilder
+                .name("notification-topic")
                 .build();
     }
 }

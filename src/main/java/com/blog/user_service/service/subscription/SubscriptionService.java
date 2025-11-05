@@ -1,6 +1,5 @@
-package com.blog.user_service.service;
+package com.blog.user_service.service.subscription;
 
-import com.blog.user_service.model.entity.subscription.Subscription;
 import com.blog.user_service.model.entity.user.User;
 import org.springframework.stereotype.Service;
 

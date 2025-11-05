@@ -1,13 +1,16 @@
 package com.blog.user_service.model.dto.subscription;
 
+import com.blog.user_service.model.entity.subscription.SubscriptionAction;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Schema(description = "Сообщение в kafka о подписке/отписке пользователей")
@@ -22,6 +25,6 @@ public class UserSubscriptionEvent {
     private LocalDateTime timestamp;
 
     @Schema(description = "статус", example = "FOLLOW/UNFOLLOW")
-    private String action;
+    private SubscriptionAction action;
 }
 

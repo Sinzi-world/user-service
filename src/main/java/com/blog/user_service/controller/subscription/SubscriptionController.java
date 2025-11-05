@@ -1,7 +1,7 @@
 package com.blog.user_service.controller.subscription;
 
 import com.blog.user_service.model.entity.user.User;
-import com.blog.user_service.service.SubscriptionService;
+import com.blog.user_service.service.subscription.SubscriptionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
