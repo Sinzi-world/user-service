@@ -11,6 +11,7 @@ import com.blog.user_service.service.subscription.SubscriptionService;
 import com.blog.user_service.validator.UserValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +22,12 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class SubscriptionServiceImpl implements SubscriptionService {
+
+    @Value("${spring.kafka.topic.analytics}")
+    private String analyticsTopic;
+
+    @Value("${spring.kafka.topic.notification}")
+    private String notificationTopic;
 
     private final SubscriptionRepository subscriptionRepository;
     private final UserRepository userRepository;
@@ -62,8 +69,8 @@ public class SubscriptionServiceImpl implements SubscriptionService {
                 .action(SubscriptionAction.FOLLOW)
                 .build();
 
-        kafkaProducer.sendMessage("analytics-topic",message);
-        kafkaProducer.sendMessage("notification-topic", message);
+        kafkaProducer.sendMessage(analyticsTopic,message);
+        kafkaProducer.sendMessage(notificationTopic, message);
 
     }
 
@@ -87,8 +94,8 @@ public class SubscriptionServiceImpl implements SubscriptionService {
                 .action(SubscriptionAction.UNFOLLOW)
                 .build();
 
-        kafkaProducer.sendMessage("analytics-topic", message);
-        kafkaProducer.sendMessage("notification-topic", message);
+        kafkaProducer.sendMessage(analyticsTopic,message);
+        kafkaProducer.sendMessage(notificationTopic, message);
     }
 
     @Override
