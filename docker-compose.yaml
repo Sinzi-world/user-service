@@ -3,6 +3,10 @@ volumes:
     driver: local
   cache:
     driver: local
+  zookeeper-data:
+    driver: local
+  kafka-data:
+    driver: local
 
 services:
   postgres:
@@ -36,6 +40,8 @@ services:
       ZOOKEEPER_TICK_TIME: 2000
     ports:
       - "2181:2181"
+    volumes:
+      - zookeeper-data:/var/lib/zookeeper/data
 
   kafka:
     image: confluentinc/cp-kafka:7.5.0
@@ -56,6 +62,8 @@ services:
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+    volumes:
+      - kafka-data:/var/lib/kafka/data
 
   kafka-ui:
     image: provectuslabs/kafka-ui:latest
